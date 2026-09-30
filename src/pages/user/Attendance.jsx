@@ -8,6 +8,7 @@ export default function Attendance() {
   const absent = myAttendance.filter(a => a.status === 'Absent').length;
   const rate = myAttendance.length > 0 ? Math.round((myDaysActive / myAttendance.length) * 100) : 0;
 
+
   const filtered = filter === 'All' ? myAttendance : myAttendance.filter(a => a.status === filter);
   const sorted = [...filtered].sort((a, b) => new Date(b.date) - new Date(a.date));
 
@@ -15,7 +16,7 @@ export default function Attendance() {
     <div>
       <h1 className="page-title">My Attendance History</h1>
 
-      <div className="grid-cards" style={{ gridTemplateColumns: 'repeat(3, 1fr)', marginBottom: 24 }}>
+      <div className="grid-cards" style={{ gridTemplateColumns: 'repeat(4, 1fr)', marginBottom: 24 }}>
         <div className="card">
           <p className="card-title">Total Sessions</p>
           <p className="card-value">{myAttendance.length}</p>
@@ -23,6 +24,10 @@ export default function Attendance() {
         <div className="card">
           <p className="card-title">Present</p>
           <p className="card-value" style={{ color: '#22c55e' }}>{myDaysActive}</p>
+        </div>
+        <div className="card">
+          <p className="card-title">Absent</p>
+          <p className="card-value" style={{ color: '#ef4444' }}>{absent}</p>
         </div>
         <div className="card">
           <p className="card-title">Attendance Rate</p>

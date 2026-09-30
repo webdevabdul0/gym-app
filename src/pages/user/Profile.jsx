@@ -54,10 +54,10 @@ export default function Profile() {
         ) : (
           <form onSubmit={save}>
             <h3 style={{ marginBottom: 16 }}>Edit Profile</h3>
-            {[['name', 'Full Name', 'text'], ['email', 'Email', 'email'], ['phone', 'Phone', 'text']].map(([k, label, type]) => (
+            {[['name', 'Full Name', 'text', true], ['email', 'Email', 'email', true], ['phone', 'Phone', 'text', false]].map(([k, label, type, req]) => (
               <div key={k} style={{ marginBottom: 14 }}>
                 <label style={labelStyle}>{label}</label>
-                <input name={k} value={form[k] || ''} onChange={change} type={type} style={inputStyle} />
+                <input name={k} value={form[k] || ''} onChange={change} type={type} required={req} style={inputStyle} />
               </div>
             ))}
             <div style={{ display: 'flex', gap: 10, marginTop: 8 }}>

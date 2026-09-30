@@ -36,13 +36,17 @@ export default function UserDashboard() {
           <p className="card-value" style={{ fontSize: 18 }}>{myTrainer ? myTrainer.name : 'Not Assigned'}</p>
           {myTrainer && <p style={{ fontSize: 13, color: '#64748b', marginTop: 4 }}>{myTrainer.specialty}</p>}
         </div>
-        {daysLeft !== null && (
-          <div className="card">
-            <p className="card-title">Membership Expires In</p>
-            <p className="card-value" style={{ color: daysLeft < 30 ? '#ef4444' : '#0284c7' }}>{daysLeft} days</p>
-            <p style={{ fontSize: 13, color: '#64748b', marginTop: 4 }}>{myProfile.expiryDate}</p>
-          </div>
-        )}
+        <div className="card">
+          <p className="card-title">Membership Expires In</p>
+          {daysLeft !== null ? (
+            <>
+              <p className="card-value" style={{ color: daysLeft < 30 ? '#ef4444' : '#0284c7' }}>{daysLeft} days</p>
+              <p style={{ fontSize: 13, color: '#64748b', marginTop: 4 }}>{myProfile.expiryDate}</p>
+            </>
+          ) : (
+            <p className="card-value" style={{ fontSize: 16, color: '#94a3b8' }}>—</p>
+          )}
+        </div>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, marginTop: 24 }}>

@@ -35,7 +35,7 @@ export default function Membership() {
               </p>
             )}
           </div>
-          <button className="btn" style={{ marginTop: 16, width: '100%' }}>Renew Plan</button>
+          <button className="btn" style={{ marginTop: 16, width: '100%' }} onClick={() => alert('Renewal request sent! Our team will contact you shortly.')}>Renew Plan</button>
         </div>
 
         {myPlan && (

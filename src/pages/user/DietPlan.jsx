@@ -12,9 +12,16 @@ export default function DietPlan() {
   const open = (d) => { setForm(d ? { ...d } : { ...EMPTY, memberId: myProfile?.id }); setModal(d || 'add'); };
   const close = () => setModal(null);
   const change = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
+  const to12h = (t) => {
+    if (!t) return '';
+    const [h, m] = t.split(':').map(Number);
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    return `${((h % 12) || 12).toString().padStart(2, '0')}:${m.toString().padStart(2, '0')} ${ampm}`;
+  };
+
   const submit = (e) => {
     e.preventDefault();
-    const data = { ...form, calories: Number(form.calories), memberId: myProfile?.id };
+    const data = { ...form, time: to12h(form.time) || form.time, calories: Number(form.calories), memberId: myProfile?.id };
     modal === 'add' ? addDiet(data) : updateDiet(data);
     close();
   };
