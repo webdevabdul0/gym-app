@@ -12,17 +12,22 @@ const TRAINERS_DEFAULT = [
 ];
 
 const MEMBERS_DEFAULT = [
-  { id: 1, name: 'Ali Ahmed', email: 'ali@example.com', phone: '0300-1234567', plan: 'Gold Plan', status: 'Active', joined: '2026-01-15', trainerId: 1, membershipId: 'GYM-0089', expiryDate: '2026-12-31' },
-  { id: 2, name: 'Usman Khan', email: 'usman@example.com', phone: '0312-9876543', plan: 'Silver Plan', status: 'Pending', joined: '2026-02-20', trainerId: 2, membershipId: 'GYM-0090', expiryDate: '2026-11-30' },
-  { id: 3, name: 'Sara Malik', email: 'sara@example.com', phone: '0321-5554443', plan: 'Basic Plan', status: 'Active', joined: '2026-03-01', trainerId: 1, membershipId: 'GYM-0091', expiryDate: '2026-10-01' },
-  { id: 4, name: 'Farhan Raza', email: 'farhan@example.com', phone: '0333-1112223', plan: 'Gold Plan', status: 'Active', joined: '2026-03-10', trainerId: 2, membershipId: 'GYM-0092', expiryDate: '2026-12-10' },
+  { id: 1, name: 'Ali Ahmed', email: 'ali@example.com', phone: '0300-1234567', plan: 'Gold Plan', status: 'Active', joined: '2026-07-15', trainerId: 1, membershipId: 'GYM-0089', expiryDate: '2026-12-31' },
+  { id: 2, name: 'Usman Khan', email: 'usman@example.com', phone: '0312-9876543', plan: 'Silver Plan', status: 'Pending', joined: '2026-08-20', trainerId: 2, membershipId: 'GYM-0090', expiryDate: '2026-11-30' },
+  { id: 3, name: 'Sara Malik', email: 'sara@example.com', phone: '0321-5554443', plan: 'Basic Plan', status: 'Active', joined: '2026-09-05', trainerId: 1, membershipId: 'GYM-0091', expiryDate: '2026-10-05' },
+  { id: 4, name: 'Farhan Raza', email: 'farhan@example.com', phone: '0333-1112223', plan: 'Gold Plan', status: 'Active', joined: '2026-09-18', trainerId: 2, membershipId: 'GYM-0092', expiryDate: '2026-12-18' },
+  { id: 5, name: 'Hina Baig', email: 'hina@example.com', phone: '0345-6667778', plan: 'Silver Plan', status: 'Active', joined: '2026-09-22', trainerId: 1, membershipId: 'GYM-0093', expiryDate: '2026-12-22' },
 ];
 
 const PAYMENTS_DEFAULT = [
-  { id: 101, member: 'Ali Ahmed', memberId: 1, amount: 7000, date: '2026-03-01', status: 'Paid', plan: 'Gold Plan' },
-  { id: 102, member: 'Usman Khan', memberId: 2, amount: 5000, date: '2026-03-05', status: 'Pending', plan: 'Silver Plan' },
-  { id: 103, member: 'Sara Malik', memberId: 3, amount: 3000, date: '2026-03-08', status: 'Paid', plan: 'Basic Plan' },
-  { id: 104, member: 'Farhan Raza', memberId: 4, amount: 7000, date: '2026-03-10', status: 'Paid', plan: 'Gold Plan' },
+  { id: 101, member: 'Ali Ahmed', memberId: 1, amount: 7000, date: '2026-07-15', status: 'Paid', plan: 'Gold Plan' },
+  { id: 102, member: 'Ali Ahmed', memberId: 1, amount: 7000, date: '2026-08-15', status: 'Paid', plan: 'Gold Plan' },
+  { id: 103, member: 'Ali Ahmed', memberId: 1, amount: 7000, date: '2026-09-15', status: 'Paid', plan: 'Gold Plan' },
+  { id: 104, member: 'Usman Khan', memberId: 2, amount: 5000, date: '2026-08-20', status: 'Paid', plan: 'Silver Plan' },
+  { id: 105, member: 'Usman Khan', memberId: 2, amount: 5000, date: '2026-09-20', status: 'Pending', plan: 'Silver Plan' },
+  { id: 106, member: 'Sara Malik', memberId: 3, amount: 3000, date: '2026-09-05', status: 'Paid', plan: 'Basic Plan' },
+  { id: 107, member: 'Farhan Raza', memberId: 4, amount: 7000, date: '2026-09-18', status: 'Paid', plan: 'Gold Plan' },
+  { id: 108, member: 'Hina Baig', memberId: 5, amount: 5000, date: '2026-09-22', status: 'Paid', plan: 'Silver Plan' },
 ];
 
 const ATTENDANCE_DEFAULT = [
@@ -32,6 +37,7 @@ const ATTENDANCE_DEFAULT = [
   { id: 4, memberId: 2, member: 'Usman Khan', date: '2026-09-30', checkIn: '--', status: 'Absent' },
   { id: 5, memberId: 3, member: 'Sara Malik', date: '2026-09-30', checkIn: '07:15 AM', status: 'Present' },
   { id: 6, memberId: 4, member: 'Farhan Raza', date: '2026-09-30', checkIn: '08:00 AM', status: 'Present' },
+  { id: 7, memberId: 5, member: 'Hina Baig', date: '2026-09-30', checkIn: '07:45 AM', status: 'Present' },
 ];
 
 const WORKOUT_DEFAULT = [
@@ -53,11 +59,19 @@ const DIET_DEFAULT = [
 
 const CURRENT_USER_DEFAULT = { memberId: 1 };
 
+const DATA_VERSION = 'v2';
+
 function load(key, def) {
   try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : def; } catch { return def; }
 }
 function save(key, val) {
   try { localStorage.setItem(key, JSON.stringify(val)); } catch {}
+}
+
+// Clear stale data if version changed
+if (localStorage.getItem('gym_data_version') !== DATA_VERSION) {
+  ['gym_members','gym_trainers','gym_plans','gym_payments','gym_attendance','gym_workouts','gym_diet'].forEach(k => localStorage.removeItem(k));
+  localStorage.setItem('gym_data_version', DATA_VERSION);
 }
 
 const GymContext = createContext(null);
