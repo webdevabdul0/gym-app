@@ -12,25 +12,46 @@ const TRAINERS_DEFAULT = [
 ];
 
 const MEMBERS_DEFAULT = [
-  { id: 1, name: 'Ali Ahmed', email: 'ali@example.com', plan: 'Gold', status: 'Active', joined: '2026-01-15' },
-  { id: 2, name: 'Usman Khan', email: 'usman@example.com', plan: 'Silver', status: 'Pending', joined: '2026-02-20' },
-  { id: 3, name: 'Sara Malik', email: 'sara@example.com', plan: 'Basic', status: 'Active', joined: '2026-03-01' },
-  { id: 4, name: 'Farhan Raza', email: 'farhan@example.com', plan: 'Gold', status: 'Active', joined: '2026-03-10' },
+  { id: 1, name: 'Ali Ahmed', email: 'ali@example.com', phone: '0300-1234567', plan: 'Gold Plan', status: 'Active', joined: '2026-01-15', trainerId: 1, membershipId: 'GYM-0089', expiryDate: '2026-12-31' },
+  { id: 2, name: 'Usman Khan', email: 'usman@example.com', phone: '0312-9876543', plan: 'Silver Plan', status: 'Pending', joined: '2026-02-20', trainerId: 2, membershipId: 'GYM-0090', expiryDate: '2026-11-30' },
+  { id: 3, name: 'Sara Malik', email: 'sara@example.com', phone: '0321-5554443', plan: 'Basic Plan', status: 'Active', joined: '2026-03-01', trainerId: 1, membershipId: 'GYM-0091', expiryDate: '2026-10-01' },
+  { id: 4, name: 'Farhan Raza', email: 'farhan@example.com', phone: '0333-1112223', plan: 'Gold Plan', status: 'Active', joined: '2026-03-10', trainerId: 2, membershipId: 'GYM-0092', expiryDate: '2026-12-10' },
 ];
 
 const PAYMENTS_DEFAULT = [
-  { id: 101, member: 'Ali Ahmed', amount: 7000, date: '2026-03-01', status: 'Paid', plan: 'Gold' },
-  { id: 102, member: 'Usman Khan', amount: 5000, date: '2026-03-05', status: 'Pending', plan: 'Silver' },
-  { id: 103, member: 'Sara Malik', amount: 3000, date: '2026-03-08', status: 'Paid', plan: 'Basic' },
-  { id: 104, member: 'Farhan Raza', amount: 7000, date: '2026-03-10', status: 'Paid', plan: 'Gold' },
+  { id: 101, member: 'Ali Ahmed', memberId: 1, amount: 7000, date: '2026-03-01', status: 'Paid', plan: 'Gold Plan' },
+  { id: 102, member: 'Usman Khan', memberId: 2, amount: 5000, date: '2026-03-05', status: 'Pending', plan: 'Silver Plan' },
+  { id: 103, member: 'Sara Malik', memberId: 3, amount: 3000, date: '2026-03-08', status: 'Paid', plan: 'Basic Plan' },
+  { id: 104, member: 'Farhan Raza', memberId: 4, amount: 7000, date: '2026-03-10', status: 'Paid', plan: 'Gold Plan' },
 ];
 
 const ATTENDANCE_DEFAULT = [
-  { id: 1, memberId: 1, member: 'Ali Ahmed', date: '2026-09-30', checkIn: '06:30 AM', status: 'Present' },
-  { id: 2, memberId: 2, member: 'Usman Khan', date: '2026-09-30', checkIn: '--', status: 'Absent' },
-  { id: 3, memberId: 3, member: 'Sara Malik', date: '2026-09-30', checkIn: '07:15 AM', status: 'Present' },
-  { id: 4, memberId: 4, member: 'Farhan Raza', date: '2026-09-30', checkIn: '08:00 AM', status: 'Present' },
+  { id: 1, memberId: 1, member: 'Ali Ahmed', date: '2026-09-28', checkIn: '06:30 AM', status: 'Present' },
+  { id: 2, memberId: 1, member: 'Ali Ahmed', date: '2026-09-29', checkIn: '07:00 AM', status: 'Present' },
+  { id: 3, memberId: 1, member: 'Ali Ahmed', date: '2026-09-30', checkIn: '06:45 AM', status: 'Present' },
+  { id: 4, memberId: 2, member: 'Usman Khan', date: '2026-09-30', checkIn: '--', status: 'Absent' },
+  { id: 5, memberId: 3, member: 'Sara Malik', date: '2026-09-30', checkIn: '07:15 AM', status: 'Present' },
+  { id: 6, memberId: 4, member: 'Farhan Raza', date: '2026-09-30', checkIn: '08:00 AM', status: 'Present' },
 ];
+
+const WORKOUT_DEFAULT = [
+  { id: 1, memberId: 1, day: 'Monday', exercise: 'Bench Press', sets: '4 Sets x 12 Reps' },
+  { id: 2, memberId: 1, day: 'Tuesday', exercise: 'Squats & Leg Press', sets: '4 Sets x 10 Reps' },
+  { id: 3, memberId: 1, day: 'Wednesday', exercise: 'Deadlift & Rows', sets: '3 Sets x 8 Reps' },
+  { id: 4, memberId: 1, day: 'Thursday', exercise: 'Shoulder Press', sets: '4 Sets x 12 Reps' },
+  { id: 5, memberId: 1, day: 'Friday', exercise: 'Pull-ups & Bicep Curls', sets: '3 Sets x 10 Reps' },
+  { id: 6, memberId: 1, day: 'Saturday', exercise: 'Cardio & Core', sets: '30 min' },
+];
+
+const DIET_DEFAULT = [
+  { id: 1, memberId: 1, meal: 'Breakfast', time: '07:00 AM', items: '4 Egg Whites + Oatmeal + Black Coffee', calories: 420 },
+  { id: 2, memberId: 1, meal: 'Mid-Morning', time: '10:00 AM', items: 'Banana + Protein Shake', calories: 280 },
+  { id: 3, memberId: 1, meal: 'Lunch', time: '01:00 PM', items: '200g Grilled Chicken + Brown Rice', calories: 550 },
+  { id: 4, memberId: 1, meal: 'Pre-Workout', time: '04:30 PM', items: 'Apple + Peanut Butter', calories: 200 },
+  { id: 5, memberId: 1, meal: 'Dinner', time: '08:00 PM', items: 'Fish / Mutton + Green Salad', calories: 480 },
+];
+
+const CURRENT_USER_DEFAULT = { memberId: 1 };
 
 function load(key, def) {
   try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : def; } catch { return def; }
@@ -47,12 +68,17 @@ export function GymProvider({ children }) {
   const [plans, setPlans] = useState(() => load('gym_plans', PLANS_DEFAULT));
   const [payments, setPayments] = useState(() => load('gym_payments', PAYMENTS_DEFAULT));
   const [attendance, setAttendance] = useState(() => load('gym_attendance', ATTENDANCE_DEFAULT));
+  const [workouts, setWorkouts] = useState(() => load('gym_workouts', WORKOUT_DEFAULT));
+  const [diet, setDiet] = useState(() => load('gym_diet', DIET_DEFAULT));
+  const [currentUser] = useState(() => load('gym_current_user', CURRENT_USER_DEFAULT));
 
   useEffect(() => save('gym_members', members), [members]);
   useEffect(() => save('gym_trainers', trainers), [trainers]);
   useEffect(() => save('gym_plans', plans), [plans]);
   useEffect(() => save('gym_payments', payments), [payments]);
   useEffect(() => save('gym_attendance', attendance), [attendance]);
+  useEffect(() => save('gym_workouts', workouts), [workouts]);
+  useEffect(() => save('gym_diet', diet), [diet]);
 
   const nextId = (arr) => Math.max(0, ...arr.map(i => i.id)) + 1;
 
@@ -81,6 +107,16 @@ export function GymProvider({ children }) {
   const updateAttendance = (a) => setAttendance(p => p.map(x => x.id === a.id ? a : x));
   const deleteAttendance = (id) => setAttendance(p => p.filter(x => x.id !== id));
 
+  // Workouts
+  const addWorkout = (w) => setWorkouts(p => [...p, { ...w, id: nextId(p) }]);
+  const updateWorkout = (w) => setWorkouts(p => p.map(x => x.id === w.id ? w : x));
+  const deleteWorkout = (id) => setWorkouts(p => p.filter(x => x.id !== id));
+
+  // Diet
+  const addDiet = (d) => setDiet(p => [...p, { ...d, id: nextId(p) }]);
+  const updateDiet = (d) => setDiet(p => p.map(x => x.id === d.id ? d : x));
+  const deleteDiet = (id) => setDiet(p => p.filter(x => x.id !== id));
+
   // Derived stats
   const stats = {
     totalMembers: members.length,
@@ -91,6 +127,16 @@ export function GymProvider({ children }) {
     pendingPayments: payments.filter(p => p.status === 'Pending').length,
   };
 
+  // Current logged-in member data
+  const myProfile = members.find(m => m.id === currentUser.memberId) || members[0];
+  const myPlan = plans.find(p => p.name === myProfile?.plan);
+  const myTrainer = trainers.find(t => t.id === myProfile?.trainerId);
+  const myAttendance = attendance.filter(a => a.memberId === myProfile?.id);
+  const myPayments = payments.filter(p => p.memberId === myProfile?.id);
+  const myWorkouts = workouts.filter(w => w.memberId === myProfile?.id);
+  const myDiet = diet.filter(d => d.memberId === myProfile?.id);
+  const myDaysActive = myAttendance.filter(a => a.status === 'Present').length;
+
   return (
     <GymContext.Provider value={{
       members, addMember, updateMember, deleteMember,
@@ -98,7 +144,11 @@ export function GymProvider({ children }) {
       plans, addPlan, updatePlan, deletePlan,
       payments, addPayment, updatePayment, deletePayment,
       attendance, addAttendance, updateAttendance, deleteAttendance,
+      workouts, addWorkout, updateWorkout, deleteWorkout,
+      diet, addDiet, updateDiet, deleteDiet,
       stats,
+      myProfile, myPlan, myTrainer, myAttendance, myPayments,
+      myWorkouts, myDiet, myDaysActive,
     }}>
       {children}
     </GymContext.Provider>
