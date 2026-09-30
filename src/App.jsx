@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, NavLink, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, NavLink, Link, useLocation, Navigate } from 'react-router-dom';
 
 import Home from './pages/Home';
 import AdminAttendance from './pages/admin/AdminAttendance';
@@ -15,6 +15,7 @@ import Membership from './pages/user/Membership';
 import Profile from './pages/user/Profile';
 import UserDashboard from './pages/user/UserDashboard';
 import WorkoutPlan from './pages/user/WorkoutPlan';
+import { useGym } from './context/GymContext';
 import './App.css';
 
 const adminLinks = [
@@ -27,10 +28,16 @@ const userLinks = [
 ];
 
 function PortalLayout({ type, children }) {
+  const { myProfile } = useGym();
   const isAdmin = type === 'admin';
   const links = isAdmin ? adminLinks : userLinks;
   const title = isAdmin ? 'Admin Console' : 'Member Portal';
   const subtitle = isAdmin ? 'Gym operations & management' : 'Your fitness journey';
+
+  const userName = isAdmin ? 'Administrator' : (myProfile?.name || 'Member');
+  const userRole = isAdmin ? 'System Admin' : (myProfile?.plan || 'Member');
+  const userInitials = isAdmin ? 'AD' : (myProfile?.name || 'M').split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+  const greeting = isAdmin ? 'Management Dashboard' : `Welcome back, ${myProfile?.name?.split(' ')[0] || 'Member'}`;
 
   return <div className="portal-layout">
     <aside className="portal-sidebar">
@@ -43,7 +50,13 @@ function PortalLayout({ type, children }) {
       <div className="sidebar-bottom"><Link to="/">← Back to website</Link></div>
     </aside>
     <div className="portal-main">
-      <header className="portal-header"><div><span className="header-kicker">IRONHUB / {isAdmin ? 'ADMIN' : 'MEMBER'}</span><h3>{isAdmin ? 'Management Dashboard' : 'Welcome back, Ali'}</h3></div><div className="header-user"><div className="avatar">{isAdmin ? 'AD' : 'AA'}</div><div><b>{isAdmin ? 'Administrator' : 'Ali Ahmed'}</b><small>{isAdmin ? 'System Admin' : 'Gold Member'}</small></div></div></header>
+      <header className="portal-header">
+        <div><span className="header-kicker">IRONHUB / {isAdmin ? 'ADMIN' : 'MEMBER'}</span><h3>{greeting}</h3></div>
+        <div className="header-user">
+          <div className="avatar">{userInitials}</div>
+          <div><b>{userName}</b><small>{userRole}</small></div>
+        </div>
+      </header>
       <main className="portal-content">{children}</main>
     </div>
   </div>;
@@ -53,10 +66,24 @@ function AppRoutes() {
   const location = useLocation();
   if (location.pathname === '/') return <Home />;
   const isAdmin = location.pathname.startsWith('/admin');
+  const isUser = location.pathname.startsWith('/user');
+  if (!isAdmin && !isUser) return <Navigate to="/" replace />;
+
   return <PortalLayout type={isAdmin ? 'admin' : 'user'}><Routes>
-    <Route path="/admin/dashboard" element={<AdminDashboard />} /><Route path="/admin/members" element={<AdminMembers />} /><Route path="/admin/trainers" element={<AdminTrainers />} /><Route path="/admin/plans" element={<AdminPlans />} /><Route path="/admin/payments" element={<AdminPayments />} /><Route path="/admin/attendance" element={<AdminAttendance />} /><Route path="/admin/reports" element={<AdminReports />} />
-    <Route path="/user/dashboard" element={<UserDashboard />} /><Route path="/user/profile" element={<Profile />} /><Route path="/user/workout" element={<WorkoutPlan />} /><Route path="/user/diet" element={<DietPlan />} /><Route path="/user/attendance" element={<Attendance />} /><Route path="/user/membership" element={<Membership />} />
-    <Route path="*" element={<Home />} />
+    <Route path="/admin/dashboard" element={<AdminDashboard />} />
+    <Route path="/admin/members" element={<AdminMembers />} />
+    <Route path="/admin/trainers" element={<AdminTrainers />} />
+    <Route path="/admin/plans" element={<AdminPlans />} />
+    <Route path="/admin/payments" element={<AdminPayments />} />
+    <Route path="/admin/attendance" element={<AdminAttendance />} />
+    <Route path="/admin/reports" element={<AdminReports />} />
+    <Route path="/user/dashboard" element={<UserDashboard />} />
+    <Route path="/user/profile" element={<Profile />} />
+    <Route path="/user/workout" element={<WorkoutPlan />} />
+    <Route path="/user/diet" element={<DietPlan />} />
+    <Route path="/user/attendance" element={<Attendance />} />
+    <Route path="/user/membership" element={<Membership />} />
+    <Route path="*" element={<Navigate to="/" replace />} />
   </Routes></PortalLayout>;
 }
 

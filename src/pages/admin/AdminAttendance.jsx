@@ -22,9 +22,16 @@ export default function AdminAttendance() {
       setForm(f => ({ ...f, [name]: val }));
     }
   };
+  const to12h = (t) => {
+    if (!t) return '--';
+    const [h, m] = t.split(':').map(Number);
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    return `${((h % 12) || 12).toString().padStart(2, '0')}:${m.toString().padStart(2, '0')} ${ampm}`;
+  };
+
   const submit = (e) => {
     e.preventDefault();
-    const data = { ...form, checkIn: form.status === 'Absent' ? '--' : form.checkIn };
+    const data = { ...form, checkIn: form.status === 'Absent' ? '--' : to12h(form.checkIn) };
     modal === 'add' ? addAttendance(data) : updateAttendance(data);
     close();
   };

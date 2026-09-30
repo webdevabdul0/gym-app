@@ -11,7 +11,15 @@ export default function AdminPayments() {
 
   const open = (p) => { setForm(p ? { ...p } : { ...EMPTY }); setModal(p || 'add'); };
   const close = () => setModal(null);
-  const change = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }));
+  const change = (e) => {
+    const { name, value } = e.target;
+    if (name === 'member') {
+      const m = members.find(m => m.name === value);
+      setForm(f => ({ ...f, member: value, memberId: m ? m.id : '', plan: m?.plan || f.plan }));
+    } else {
+      setForm(f => ({ ...f, [name]: value }));
+    }
+  };
   const submit = (e) => {
     e.preventDefault();
     modal === 'add' ? addPayment({ ...form, amount: Number(form.amount) }) : updatePayment({ ...form, amount: Number(form.amount) });

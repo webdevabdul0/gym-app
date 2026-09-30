@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useGym } from '../../context/GymContext';
 
-const EMPTY = { name: '', email: '', plan: 'Basic', status: 'Active', joined: new Date().toISOString().slice(0, 10) };
+const EMPTY = { name: '', email: '', plan: 'Basic Plan', status: 'Active', joined: new Date().toISOString().slice(0, 10) };
 
 export default function AdminMembers() {
   const { members, plans, addMember, updateMember, deleteMember } = useGym();
